@@ -141,7 +141,10 @@ class wxWidgetsConan(ConanFile):
         # MSVC works good anyway, but Ninja 
         # won't work on Cygwin setups.
         if self.settings.os != "Windows":
-            self.build_requires("ninja/1.10.1")
+            self.build_requires("ninja/1.10.2")
+        else:
+            if(self.settings.compiler != "Visual Studio"):
+                raise ConanInvalidConfiguration("wxwidgets recipe requires MSVC build on Windows because of xz_utils pkg");
 
     def requirements(self):
         if self.options.png == 'libpng':
@@ -251,8 +254,9 @@ class wxWidgetsConan(ConanFile):
         return self._cmake
 
     def build(self):
-        for patch in self.conan_data["patches"][self.version]:
-            tools.patch(**patch)
+        if self.version in self.conan_data["patches"]:
+            for patch in self.conan_data["patches"][self.version]:
+                tools.patch(**patch)
         cmake = self._configure_cmake()
         cmake.build()
 

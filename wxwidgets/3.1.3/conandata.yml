@@ -5,10 +5,13 @@ sources:
   "3.1.3.1-audacity":
     url: "https://github.com/audacity/wxWidgets/archive/v3.1.3.1-audacity.tar.gz"
     sha256: "bc62edab621cf0a568ce6716407d5090701c09b57335044f92066b302bb70d1d"  
+  "3.1.3":
+    url: "https://github.com/wxWidgets/wxWidgets/releases/download/v3.1.3/wxWidgets-3.1.3.tar.bz2"
+    sha256: "FFFC1D34DAC54FF7008DF327907984B156C50CFF5A2F36EE3DA6052744AB554A"
 patches:
   "3.1.3-audacity":
     - patch_file: "patches/d9deaa8b76128613a84f3d085eb1e4b05631083a.patch"
       base_path: "source_subfolder"
   "3.1.3.1-audacity":
     - patch_file: "patches/d9deaa8b76128613a84f3d085eb1e4b05631083a.patch"
-      base_path: "source_subfolder"    
+      base_path: "source_subfolder"
