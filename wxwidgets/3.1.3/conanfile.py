@@ -4,7 +4,7 @@ import os
 
 class wxWidgetsConan(ConanFile):
     name = "wxwidgets"
-    version = 3.1.3
+    version = "3.1.3"
     description = "wxWidgets is a C++ library that lets developers create applications for Windows, macOS, " \
                   "Linux and other platforms with a single code base."
     topics = ("conan", "wxwidgets", "gui", "ui")
