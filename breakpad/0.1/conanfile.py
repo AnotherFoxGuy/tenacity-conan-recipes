@@ -3,6 +3,7 @@ from conans import ConanFile, CMake, AutoToolsBuildEnvironment, tools
 
 class BreakpadConan(ConanFile):
     name = "breakpad"
+    version = "0.1"
     license = "https://chromium.googlesource.com/breakpad/breakpad/+/refs/heads/master/LICENSE"
     url = "https://github.com/audacity/conan-recipes"
     description = "Breakpad is a set of client and server components which implement a crash-reporting system."

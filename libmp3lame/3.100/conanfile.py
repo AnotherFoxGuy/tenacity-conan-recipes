@@ -5,6 +5,7 @@ import shutil
 
 class LibMP3LameConan(ConanFile):
     name = "libmp3lame"
+    version = "3.100"
     url = "https://github.com/conan-io/conan-center-index"
     description = "LAME is a high quality MPEG Audio Layer III (MP3) encoder licensed under the LGPL."
     homepage = "http://lame.sourceforge.net"
@@ -86,8 +87,8 @@ class LibMP3LameConan(ConanFile):
 
     def package(self):
         self.copy(pattern="LICENSE", src=self._source_subfolder, dst="licenses")
+        self.copy(pattern='*.h', src=os.path.join(self._source_subfolder, 'include'), dst=os.path.join('include', 'lame'))
         if self._is_msvc:
-            self.copy(pattern='*.h', src=os.path.join(self._source_subfolder, 'include'), dst=os.path.join('include', 'lame'))
             self.copy(pattern='*.lib', src=os.path.join(self._source_subfolder, 'output'), dst='lib')
             self.copy(pattern='*.exe', src=os.path.join(self._source_subfolder, 'output'), dst='bin')
             if self.options.shared:
