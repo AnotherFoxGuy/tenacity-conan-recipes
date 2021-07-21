@@ -5,7 +5,6 @@ import shutil
 
 class LibMP3LameConan(ConanFile):
     name = "libmp3lame"
-    version = "3.100"
     url = "https://github.com/conan-io/conan-center-index"
     description = "LAME is a high quality MPEG Audio Layer III (MP3) encoder licensed under the LGPL."
     homepage = "http://lame.sourceforge.net"

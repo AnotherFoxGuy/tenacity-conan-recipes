@@ -7,7 +7,7 @@ class wxWidgetsConan(ConanFile):
     description = "wxWidgets is a C++ library that lets developers create applications for Windows, macOS, " \
                   "Linux and other platforms with a single code base."
     topics = ("conan", "wxwidgets", "gui", "ui")
-    url = "https://github.com/bincrafters/conan-wxwidgets"
+    url = "https://github.com/tenacityteam/conan-recipes/"
     homepage = "https://www.wxwidgets.org"
     license = "wxWidgets"
     exports_sources = ["CMakeLists.txt", "patches/*"]
@@ -136,11 +136,7 @@ class wxWidgetsConan(ConanFile):
                     installer.install(package)
 
     def build_requirements(self):
-        # On Windows, use default build system.
-        # MSVC works good anyway, but Ninja 
-        # won't work on Cygwin setups.
-        if self.settings.os != "Windows":
-            self.build_requires("ninja/1.10.1")
+        self.build_requires("ninja/1.10.2")
 
     def requirements(self):
         if self.options.png == 'libpng':
@@ -148,15 +144,15 @@ class wxWidgetsConan(ConanFile):
         if self.options.jpeg == 'libjpeg':
             self.requires('libjpeg/9d')
         elif self.options.jpeg == 'libjpeg-turbo':
-            self.requires('libjpeg-turbo/2.0.5')
+            self.requires('libjpeg-turbo/2.0.6')
         elif self.options.jpeg == 'mozjpeg':
-            self.requires('mozjpeg/3.3.1')
+            self.requires('mozjpeg/3.3.1')#4.0.0
         if self.options.tiff == 'libtiff':
-            self.requires('libtiff/4.0.9')
+            self.requires('libtiff/4.0.9')#4.2.0
         if self.options.zlib == 'zlib':
             self.requires('zlib/1.2.11')
         if self.options.expat == 'expat' and self.options.xml:
-            self.requires('expat/2.2.9')
+            self.requires('expat/2.2.9')#2.4.1
 
     def source(self):
         tools.get(**self.conan_data["sources"][self.version])
@@ -185,8 +181,8 @@ class wxWidgetsConan(ConanFile):
         cmake.definitions['wxBUILD_DEMOS'] = 'OFF'
         cmake.definitions['wxBUILD_INSTALL'] = True
         cmake.definitions['wxBUILD_COMPATIBILITY'] = self.options.compatibility
-        if self.settings.compiler == 'clang' or self.settings.compiler == 'apple-clang':
-            cmake.definitions['wxBUILD_PRECOMP'] = 'OFF'
+        #if self.settings.compiler == 'clang' or self.settings.compiler == 'apple-clang':
+        cmake.definitions['wxBUILD_PRECOMP'] = 'OFF'
 
         # platform-specific options
         if self.settings.compiler == 'Visual Studio':
@@ -243,15 +239,16 @@ class wxWidgetsConan(ConanFile):
         for item in str(self.options.custom_disables).split(","):
             if len(item) > 0:
                 cmake.definitions[item] = False
-
+                
         cmake.configure(build_folder=self._build_subfolder)
 
         self._cmake = cmake
         return self._cmake
 
     def build(self):
-        for patch in self.conan_data["patches"][self.version]:
-            tools.patch(**patch)
+        if self.version in self.conan_data["patches"]:
+            for patch in self.conan_data["patches"][self.version]:
+                tools.patch(**patch)
         cmake = self._configure_cmake()
         cmake.build()
 
@@ -279,7 +276,7 @@ class wxWidgetsConan(ConanFile):
                         os.symlink(rel, filename)
 
     def package_info(self):
-        version_tokens = self.version[0:self.version.find('-')].split('.')
+        version_tokens = self.version.split('.') #self.version[0:self.version.find('-')].split('.')
         version_major = version_tokens[0]
         version_minor = version_tokens[1]
         version_suffix_major_minor = '-%s.%s' % (version_major, version_minor)
@@ -289,7 +286,7 @@ class wxWidgetsConan(ConanFile):
         use_debug_suffix = False
         if self.settings.build_type == 'Debug':
             version_list = [int(part) for part in version_tokens]
-            use_debug_suffix = (self.settings.os == 'Windows' or version_list < [3, 1, 3])
+            use_debug_suffix = (self.settings.os == 'Windows' or version_list < [3, 1, 5])
 
         debug = 'd' if use_debug_suffix else ''
             
