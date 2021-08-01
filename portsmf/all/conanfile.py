@@ -2,7 +2,7 @@ from conans import ConanFile, CMake, tools
 from conans.tools import os_info
 
 class PortSMFConan(ConanFile):
-    name = "PortSMF"
+    name = "portsmf"
     license = "MIT"
     author = "Edgar (Edgar@AnotherFoxGuy.com)"
     url = "https://github.com/tenacityteam/conan-recipes/"
