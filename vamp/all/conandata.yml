@@ -1,0 +1,4 @@
+sources:
+  "2.9.0":
+    url: "https://cdn.anotherfoxguy.com/vamp-plugin-sdk-2.9.0.tar.gz"
+    sha256: b72a78ef8ff8a927dc2ed7e66ecf4c62d23268a5d74d02da25be2b8d00341099
