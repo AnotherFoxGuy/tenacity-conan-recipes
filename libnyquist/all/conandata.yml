@@ -1,0 +1,4 @@
+sources:
+  "3.16":
+    url: "http://prdownloads.sourceforge.net/nyquist/nyqsrc316.zip"
+    sha256: b37fd42290d82c265ff1c733f9d08ac211460ff48b8415758ab0034ef9af7916
